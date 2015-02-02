@@ -10,14 +10,19 @@ public class Character {
 
     /* The name of the character. */
     private String name;
+
     /* The characters level. */
     private  int level;
+
     /* The characters amount of health. */
     private int health;
+
     /* The amount of damage that the character can deal. */
     private int damage;
+
     /* The characters position on the map. */
     private Point positionPoint;
+
     /* The characters skills. */
     private Skill[] skillArray;
 

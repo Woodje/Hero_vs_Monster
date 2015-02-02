@@ -8,8 +8,10 @@ public class Skill {
 
     /* The name of the skill. */
     private String name;
+
     /* The minimum damage the skill can deal. */
     private int minDamage;
+
     /* The maximum damage the skill can deal. */
     private int maxDamage;
 
