@@ -10,8 +10,17 @@ public class Skill {
     private int minDamage;
     private int maxDamage;
 
-
+    /**
+     * Constructor.
+     * @param name - The name of the skill.
+     * @param minDamage - The minimum damage for the skill.
+     * @param maxDamage - The maximum damage for the skill.
+     */
     public Skill(String name, int minDamage, int maxDamage) {
+
+        this.name = name;
+        this.minDamage = minDamage;
+        this.maxDamage = maxDamage;
 
     }
 
