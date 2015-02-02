@@ -88,7 +88,7 @@ public class Map {
     /** Return string that represents the map. */
     public String getMap() {
 
-        String stringMap = "";
+        String stringMap = "  ";
 
         for (int y = 0; y < map[0].length; y++) {
 
@@ -100,7 +100,7 @@ public class Map {
 
                 }
 
-                stringMap += "\n";
+                stringMap += "\n  ";
 
             }
 

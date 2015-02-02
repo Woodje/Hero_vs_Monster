@@ -13,18 +13,25 @@ import java.util.Scanner;
 public class UserInterface {
 
     /**
-     * Prints the specified array list to the screen.
-     * @param outputStrings - This is an array list of strings that will be printed to the screen.
+     * Prints the provided string to the screen.
+     * @param outputString - This is a string that will be printed to the screen.
      */
-    public void drawToScreen(ArrayList<String> outputStrings) {
+    public void drawToScreen(String outputString) {
 
-        for (String output : outputStrings)
-            System.out.println(output);
+        for (int i = 0; i < 30; i++)
+            System.out.println();
+
+        System.out.println(outputString);
 
     }
 
-    /** Return input from the user */
-    public String getInput() {
+    /**
+     * Prompts the user for an input.
+     * @param promptString - This is a string that will be printed to the screen.
+     */
+    public String getInput(String promptString) {
+
+        System.out.print(promptString);
 
         Scanner input = new Scanner(System.in);
 
