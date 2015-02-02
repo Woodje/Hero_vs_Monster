@@ -125,6 +125,7 @@ public class Character {
 
             throw new ArrayIndexOutOfBoundsException("Only " + skillArray.length + " skills allowed. Index: " + index + " does not exist.");
         }
+
         skillArray[index] = skill;
 
     }
