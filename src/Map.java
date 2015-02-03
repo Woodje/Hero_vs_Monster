@@ -1,6 +1,7 @@
 package com.company;
 
 import java.awt.*;
+import java.awt.image.AreaAveragingScaleFilter;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -38,6 +39,16 @@ public class Map {
 
     /**
      * Constructor.
+     * As default, mapDirectory will be set to be equal to the user working directory.
+     */
+    public Map() {
+
+        mapDirectory = System.getProperty("user.dir");
+
+    }
+
+    /**
+     * Constructor.
      * @param mapDirectory - This is where the map files is to be located.
      */
     public Map(String mapDirectory) {
@@ -59,7 +70,7 @@ public class Map {
      */
     public void setMap(String mapFileName) {
 
-        ArrayList<String> mapFromFile = getLinesFromFile(mapDirectory + mapFileName);
+        ArrayList<String> mapFromFile = getLinesFromFile(mapDirectory + "\\" + mapFileName);
 
         if (!(mapFromFile.size() > 0))
             return;
@@ -82,6 +93,22 @@ public class Map {
             }
 
         }
+
+    }
+
+    public String getMaps() {
+
+        String fileList = "No maps found!";
+
+        File[] files = getMapsFiles();
+
+        if (files.length > 0)
+            fileList = "";
+
+        for (int i = 0; i < files.length; i++)
+            fileList += "  " + String.valueOf(i + 1) + " - " + files[i].getName() + "\n";
+
+        return fileList;
 
     }
 
@@ -110,21 +137,58 @@ public class Map {
 
     }
 
+    public String getMapFile(int index) {
+
+        String mapFileName = "";
+
+        File[] files = getMapsFiles();
+
+        if (index - 1 > files.length -1) {
+
+            throw new ArrayIndexOutOfBoundsException("Only " + files.length + " files. Index: " + index + " does not exist.");
+        }
+
+        return files[index - 1].getName();
+    }
+
+    public File[] getMapsFiles() {
+
+        FilenameFilter filenameFilter = new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+
+                if (name.endsWith(".map"))
+                    return true;
+                else
+                    return false;
+            }
+        };
+
+        return new File(mapDirectory).listFiles(filenameFilter);
+
+    }
+
     /**
-     * Return the first occurrence of the specified texture.
+     * Return all the occurrences of the specified texture.
      * @param texture - This is what kind of texture that are to be located.
      *
      */
-    public Point getTextureLocation(String[] texture) {
+    public ArrayList<Point> getTextureLocations(String[] texture) {
 
-        Point point = new Point();
+        ArrayList<Point> points = new ArrayList<Point>();
 
         for (int y = 0; y < map[0].length; y++)
             for (int x = 0; x < map.length; x++)
                 if (map[x][y] == texture)
-                    point.setLocation(x, y);
+                    points.add(new Point(x, y));
 
-        return point;
+        return points;
+    }
+
+    public void setTextureLocation(String[] texture, Point point) {
+
+        map[point.x][point.y] = texture;
+
     }
 
     /**
@@ -135,34 +199,32 @@ public class Map {
      * @param point - This is to where the texture should be moved.
      *
      */
-    public String moveTextureLocation(String[] texture, Point point) {
+    public String moveTextureLocation(String[] texture, Point fromPoint, Point toPoint) {
 
         String result = "Failure: Wall";
 
-        Point previousPoint = getTextureLocation(texture);
+        if (map[toPoint.x][toPoint.y] == floorTexture) {
 
-        if (map[point.x][point.y] == floorTexture) {
+            map[toPoint.x][toPoint.y] = texture;
 
-            map[point.x][point.y] = texture;
-
-            map[previousPoint.x][previousPoint.y] = floorTexture;
+            map[fromPoint.x][fromPoint.y] = floorTexture;
 
             result = "Success: Floor";
 
         }
-        else if (texture == heroTexture && map[point.x][point.y] == monsterTexture) {
+        else if (texture == heroTexture && map[toPoint.x][toPoint.y] == monsterTexture) {
 
-            map[point.x][point.y] = fightTexture;
+            map[toPoint.x][toPoint.y] = fightTexture;
 
-            map[previousPoint.x][previousPoint.y] = floorTexture;
+            map[fromPoint.x][fromPoint.y] = floorTexture;
 
             result = "Success: Monster";
         }
-        else if (texture == monsterTexture && map[point.x][point.y] == heroTexture) {
+        else if (texture == monsterTexture && map[toPoint.x][toPoint.y] == heroTexture) {
 
-            map[point.x][point.y] = fightTexture;
+            map[toPoint.x][toPoint.y] = fightTexture;
 
-            map[previousPoint.x][previousPoint.y] = floorTexture;
+            map[fromPoint.x][fromPoint.y] = floorTexture;
 
             result = "Success: Hero";
 
