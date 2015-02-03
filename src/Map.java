@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Map.java - Used for representing the map as a string of characters.
  * @author Simon Jon Pedersen
  * @author Kristoffer Broch Møller
- * @version 1.0 02/02-2015.
+ * @version 1.0 03/02-2015.
  */
 public class Map {
 
@@ -56,7 +56,7 @@ public class Map {
 
     }
 
-    /** Return string passed to the constructor. */
+    /** Return string that gives the maps directory. */
     public String getMapDirectory() {
 
         return mapDirectory;
@@ -95,6 +95,7 @@ public class Map {
 
     }
 
+    /** Return string that gives the list of maps in the maps directory. */
     public String getMaps() {
 
         String fileList = "No maps found!";
@@ -136,20 +137,24 @@ public class Map {
 
     }
 
-    public String getMapFile(int index) {
-
-        String mapFileName = "";
+    /**
+     * Return string that gives the file name at a given index.
+     * @param index - There must be an existing file at this index, otherwise an exception is thrown.
+     */
+    public String getMapFileName(int index) {
 
         File[] files = getMapsFiles();
 
         if (index - 1 > files.length -1) {
 
-            throw new ArrayIndexOutOfBoundsException("Only " + files.length + " files. Index: " + index + " does not exist.");
+            throw new ArrayIndexOutOfBoundsException("Amount of files: " + files.length + ". Index: " + index + " does not exist.");
         }
 
         return files[index - 1].getName();
+
     }
 
+    /** Return a file array of files that are in the maps directory. */
     public File[] getMapsFiles() {
 
         FilenameFilter filenameFilter = new FilenameFilter() {
@@ -182,8 +187,10 @@ public class Map {
                     points.add(new Point(x, y));
 
         return points;
+
     }
 
+    /** Sets the given texture at the given location on the map */
     public void setTextureLocation(String[] texture, Point point) {
 
         map[point.x][point.y] = texture;
@@ -191,27 +198,27 @@ public class Map {
     }
 
     /**
-     * Move the first occurrence of the specified texture to the specified location.
+     * Move a texture from a given point to another point on the map.
      * This will only work if no wall is is in the way.
      * A result in the form of string will also be returned.
-     * @param texture - This is what kind of texture that are to be moved.
-     * @param point - This is to where the texture should be moved.
+     * @param fromPoint - This is from where the texture should be taken.
+     * @param toPoint - This is to where the texture should be moved to.
      *
      */
-    public String moveTextureLocation(String[] texture, Point fromPoint, Point toPoint) {
+    public String moveTextureLocation(Point fromPoint, Point toPoint) {
 
         String result = "Failure: Wall";
 
         if (map[toPoint.x][toPoint.y] == floorTexture) {
 
-            map[toPoint.x][toPoint.y] = texture;
+            map[toPoint.x][toPoint.y] = map[fromPoint.x][fromPoint.y];
 
             map[fromPoint.x][fromPoint.y] = floorTexture;
 
             result = "Success: Floor";
 
         }
-        else if (texture == heroTexture && map[toPoint.x][toPoint.y] == monsterTexture) {
+        else if (map[fromPoint.x][fromPoint.y] == heroTexture && map[toPoint.x][toPoint.y] == monsterTexture) {
 
             map[toPoint.x][toPoint.y] = fightTexture;
 
@@ -219,7 +226,7 @@ public class Map {
 
             result = "Success: Monster";
         }
-        else if (texture == monsterTexture && map[toPoint.x][toPoint.y] == heroTexture) {
+        else if (map[fromPoint.x][fromPoint.y] == monsterTexture && map[toPoint.x][toPoint.y] == heroTexture) {
 
             map[toPoint.x][toPoint.y] = fightTexture;
 
@@ -235,7 +242,7 @@ public class Map {
 
     /**
      * Return the lines from a specified files path.
-     * @param filePath - This must be a files path and not a directories path.
+     * @param filePath - This must be a file's path and not a directories path.
      */
     private ArrayList<String> getLinesFromFile(String filePath) {
 
