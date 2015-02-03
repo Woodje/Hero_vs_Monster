@@ -6,15 +6,17 @@ import java.util.Scanner;
  * UserInterface.java - Used for displaying the game and retrieving inputs.
  * @author Simon Jon Pedersen
  * @author Kristoffer Broch Møller
- * @version 1.0 02/02-2015.
+ * @version 1.0 03/02-2015.
  */
 public class UserInterface {
 
-    public enum menu { FIRST, START, SHOWMAP, SELECTMAP, MOVEMENT };
+    /** Enumerations used for representing the different kind of menus that is needed. */
+    public enum menu { FIRST, SHOWMAP, SELECTMAP, MOVEMENT };
 
     /**
      * Prints the provided string to the screen.
-     * @param outputString - This is a string that will be printed to the screen.
+     * 55 empty lines will be printed to the screen prior to the given output string.
+     * @param outputString - This is the string that will be printed to the screen.
      */
     public void drawToScreen(String outputString) {
 
@@ -25,6 +27,11 @@ public class UserInterface {
 
     }
 
+    /**
+     * Print the specified menu type to the screen and return the inputs given for this menu.
+     * @param menuType - This is what type of menu to use.
+     * @param additionalString - This is a string that can be used for a little more custom menu.
+     */
     public String loadMenu(menu menuType, String additionalString) {
 
         String input = "";
@@ -33,22 +40,24 @@ public class UserInterface {
 
             case FIRST: input = getInput("  1 - Start game\n  2 - Show maps\n  3 - Exit game\n\n  ");
                 break;
-            case START: input = getInput("  1 - Start game\n  2 - Show maps\n  3 - Exit game\n\n  ");
-                break;
+
             case SHOWMAP:   input = getInput("  0 - Exit menu\n" + additionalString);
                 break;
+
             case SELECTMAP: input = getInput(additionalString);
                 break;
+
             case MOVEMENT:  input = getInput(additionalString + "  w = UP\n  s = DOWN\n  a = LEFT\n  d = RIGHT\n\n  ");
                 break;
 
         }
 
         return input;
+
     }
 
     /**
-     * Prompts the user for an input.
+     * Prompts the user for an input, and returns this input.
      * @param promptString - This is a string that will be printed to the screen.
      */
     public String getInput(String promptString) {

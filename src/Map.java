@@ -145,10 +145,8 @@ public class Map {
 
         File[] files = getMapsFiles();
 
-        if (index - 1 > files.length -1) {
-
+        if (index - 1 > files.length -1)
             throw new ArrayIndexOutOfBoundsException("Amount of files: " + files.length + ". Index: " + index + " does not exist.");
-        }
 
         return files[index - 1].getName();
 
@@ -263,6 +261,7 @@ public class Map {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 
             String line;
+
             while ((line = bufferedReader.readLine()) != null)
                 arrayListOfLines.add(line);
 

@@ -6,16 +6,26 @@ import java.util.ArrayList;
 import com.company.UserInterface.menu;
 
 /**
- * Created by Woodje on 02-02-2015.
+ * GameEngine - Used for controlling the basic logic of the game.
+ * @author Simon Jon Pedersen
+ * @author Kristoffer Broch Møller
+ * @version 1.0 03/02-2015.
  */
 public class GameEngine {
 
+    /** This is the list used for storing all characters in the game. */
     private ArrayList<Character> characters;
 
+    /** This is used for map operations. */
     private Map map;
 
+    /** This is used for user interfacing. */
     private UserInterface userInterface;
 
+    /**
+     * Constructor.
+     * Instantiating of: userInterface, map and characters.
+     */
     public GameEngine() {
 
         userInterface = new UserInterface();
@@ -24,6 +34,7 @@ public class GameEngine {
 
     }
 
+    /** Represent the user for the first menu. */
     public void initializeGame() {
 
         userInterface.drawToScreen("  Welcome\n");
@@ -34,15 +45,19 @@ public class GameEngine {
 
             case 1:  startGame();
                      break;
+
             case 2:  listMaps(true);
                      break;
+
             case 3:  exitGame();
+
             default: initializeGame();
 
         }
 
     }
 
+    /** Starts up the necessary precautions before starting the games loop. */
     private void startGame() {
 
         createCharacter(true);
@@ -55,6 +70,10 @@ public class GameEngine {
 
     }
 
+    /**
+     *  This is the games loop from where the actual basic logic of the game takes place.
+     *  The user is prompt for an input for each run through.
+     */
     private void gameLoop() {
 
         while(true) {
@@ -72,11 +91,10 @@ public class GameEngine {
             if (input.equals("d"))
                 moveCharacter(characters.get(0), new Point(1, 0));
 
-            gameLoop();
-
         }
     }
 
+    /** Exits the game and prints a little message */
     private void exitGame() {
 
         userInterface.drawToScreen("Thank you for playing...");
@@ -85,17 +103,26 @@ public class GameEngine {
 
     }
 
+    /**
+     * Move the given character with the amount of values from the provided point.
+     * @param character - This is the character that should be moved.
+     * @param point - This is for how much the characters location should be moved.
+     */
     private void moveCharacter(Character character, Point point) {
 
         Point oldLocation = character.getLocation();
 
         Point newLocation = new Point(point.x + character.getLocation().x, point.y + character.getLocation().y);
 
-        if (map.moveTextureLocation(character.getTexture(), oldLocation, newLocation).contains("Success"))
+        if (map.moveTextureLocation(oldLocation, newLocation).contains("Success"))
             character.setLocation(newLocation);
 
     }
 
+    /**
+     * Create either a user defined character (hero) or create one ore more monsters depending on the map.
+     * @param userDefined - True if the user should define a hero. False if monsters should be created.
+     */
     private void createCharacter(boolean userDefined) {
 
         if (userDefined) {
@@ -209,6 +236,10 @@ public class GameEngine {
 
     }
 
+    /**
+     * Represent the user for either a menu displaying the maps or a menu for selecting a map.
+     * @param showOnly - True if a displaying menu should be shown. False if a selection menu should be shown.
+     */
     private void listMaps(boolean showOnly) {
 
         int input;
@@ -235,7 +266,7 @@ public class GameEngine {
                      }
             default: if (input <= map.getMapsFiles().length && input >= 0) {
 
-                        map.setMap(map.getMapFile(input));
+                        map.setMap(map.getMapFileName(input));
 
                         if (showOnly) {
 
@@ -255,6 +286,10 @@ public class GameEngine {
 
     }
 
+    /**
+     * Convert a string to an integer if possible, if not possible then a value of -1 is returned instead.
+     * @param string - This is the string to be converted.
+     */
     private int convertToInteger(String string) {
 
         int value;
