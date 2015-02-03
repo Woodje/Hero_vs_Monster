@@ -4,7 +4,7 @@ import java.awt.Point;
  * Character.java - Represents a single character.
  * @Author Simon Jon Pedersen.
  * @Author Kristoffer Broch Møller.
- * @Version 1.0 02/02-2015
+ * @Version 1.0 03/02-2015
  */
 public class Character {
 
@@ -20,8 +20,8 @@ public class Character {
     /* The amount of damage that the character can deal. */
     private int damage;
 
-    /* The characters position on the map. */
-    private Point positionPoint;
+    /* The characters location on the map. */
+    private Point location;
 
     private String[] texture;
 
@@ -99,19 +99,19 @@ public class Character {
     }
 
     /**
-     * Sets the characters position on the map.
-     * @param positionPoint - Position on the map.
+     * Sets the characters location on the map.
+     * @param point - location on the map.
      */
-    public void setPositionPoint(Point positionPoint) {
+    public void setLocation(Point point) {
 
-        this.positionPoint = positionPoint;
+        this.location = point;
 
     }
 
-    /* Gets the position of the character on the map.*/
-    public Point getPositionPoint() {
+    /* Gets the location of the character on the map.*/
+    public Point getLocation() {
 
-        return positionPoint;
+        return location;
 
     }
 
