@@ -23,6 +23,8 @@ public class Character {
     /* The characters position on the map. */
     private Point positionPoint;
 
+    private String[] texture;
+
     /* The characters skills. */
     private Skill[] skillArray;
 
@@ -110,6 +112,18 @@ public class Character {
     public Point getPositionPoint() {
 
         return positionPoint;
+
+    }
+
+    public void setTexture(String[] texture) {
+
+        this.texture = texture;
+
+    }
+
+    public String[] getTexture() {
+
+        return texture;
 
     }
 
