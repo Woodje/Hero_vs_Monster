@@ -1,7 +1,6 @@
 package com.company;
 
 import java.awt.*;
-import java.awt.image.AreaAveragingScaleFilter;
 import java.io.*;
 import java.util.ArrayList;
 

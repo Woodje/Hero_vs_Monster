@@ -1,8 +1,8 @@
 package com.company;
 
 import java.awt.*;
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
+
 import com.company.UserInterface.menu;
 
 /**
@@ -15,8 +15,6 @@ public class GameEngine {
     private Map map;
 
     private UserInterface userInterface;
-
-    private String promptString;
 
     public GameEngine() {
 
@@ -38,7 +36,7 @@ public class GameEngine {
                      break;
             case 2:  listMaps(true);
                      break;
-            case 3:  System.exit(0);
+            case 3:  exitGame();
             default: initializeGame();
 
         }
@@ -48,6 +46,7 @@ public class GameEngine {
     private void startGame() {
 
         createCharacter(true);
+
         createCharacter(false);
 
         userInterface.getInput("Press 'ENTER' to start playing");
@@ -58,41 +57,42 @@ public class GameEngine {
 
     private void gameLoop() {
 
-        userInterface.drawToScreen(map.getMap());
+        while(true) {
 
-        String input = userInterface.loadMenu(menu.MOVEMENT, "  Where to go?\n");
+            userInterface.drawToScreen(map.getMap());
 
-        if (input.equals("w"))
-            moveCharacter(characters.get(0), new Point(0, -1));
-        if (input.equals("s"))
-            moveCharacter(characters.get(0), new Point(0, 1));
-        if (input.equals("a"))
-            moveCharacter(characters.get(0), new Point(-1, 0));
-        if (input.equals("d"))
-            moveCharacter(characters.get(0), new Point(1, 0));
+            String input = userInterface.loadMenu(menu.MOVEMENT, "  Where to go?\n");
 
+            if (input.equals("w"))
+                moveCharacter(characters.get(0), new Point(0, -1));
+            if (input.equals("s"))
+                moveCharacter(characters.get(0), new Point(0, 1));
+            if (input.equals("a"))
+                moveCharacter(characters.get(0), new Point(-1, 0));
+            if (input.equals("d"))
+                moveCharacter(characters.get(0), new Point(1, 0));
 
+            gameLoop();
 
-        gameLoop();
+        }
+    }
+
+    private void exitGame() {
+
+        userInterface.drawToScreen("Thank you for playing...");
+
+        System.exit(0);
 
     }
 
     private void moveCharacter(Character character, Point point) {
 
-        for (Character characterToMove : characters) {
+        Point oldLocation = character.getLocation();
 
-            if (characterToMove == character) {
+        Point newLocation = new Point(point.x + character.getLocation().x, point.y + character.getLocation().y);
 
-                Point oldLocation = characterToMove.getLocation();
-
-                Point newLocation = new Point(point.x + characterToMove.getLocation().x, point.y + characterToMove.getLocation().y);
-
-                if (map.moveTextureLocation(characterToMove.getTexture(), oldLocation, newLocation).contains("Success"))
-                    characterToMove.setLocation(newLocation);
-
-            }
-
-        }
+        if (map.moveTextureLocation(character.getTexture(), oldLocation, newLocation).contains("Success"))
+            character.setLocation(newLocation);
 
     }
 
@@ -100,9 +100,9 @@ public class GameEngine {
 
         if (userDefined) {
 
-            userInterface.drawToScreen("Create hero");
+            userInterface.drawToScreen("  Create hero\n  ---------------");
 
-            Character hero = new Character(userInterface.getInput("Name your hero: "), 3);
+            Character hero = new Character(userInterface.getInput("  Name your hero: "), 3);
 
             hero.setLevel(1);
 
@@ -149,7 +149,7 @@ public class GameEngine {
         }
         else {
 
-            Character monster = new Character("MONSTER", 1);
+            Character monster = new Character("MONSTER1", 1);
 
             monster.setLevel(1);
 
@@ -185,7 +185,7 @@ public class GameEngine {
 
                 for (int i = 0; i < map.getTextureLocations(map.monsterTexture).size(); i++) {
 
-                    monster = new Character("MONSTER" + String.valueOf(i), 1);
+                    monster = new Character("MONSTER" + String.valueOf(i + 1), 1);
 
                     monster.setLevel(1);
 
@@ -211,17 +211,17 @@ public class GameEngine {
 
     private void listMaps(boolean showOnly) {
 
-        int input = -1;
+        int input;
 
         if (showOnly) {
 
-            userInterface.drawToScreen("  Display Maps");
+            userInterface.drawToScreen("  Display Maps\n  -------------");
             input = convertToInteger(userInterface.loadMenu(menu.SHOWMAP, map.getMaps()));
 
         }
         else {
 
-            userInterface.drawToScreen("  Select Map");
+            userInterface.drawToScreen("  Select Map\n  ------------");
             input = convertToInteger(userInterface.loadMenu(menu.SELECTMAP, map.getMaps()));
 
         }
@@ -233,7 +233,7 @@ public class GameEngine {
                         initializeGame();
                         break;
                      }
-            default: if (input <= map.getMapsFiles().length) {
+            default: if (input <= map.getMapsFiles().length && input >= 0) {
 
                         map.setMap(map.getMapFile(input));
 

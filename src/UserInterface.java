@@ -1,7 +1,5 @@
 package com.company;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -41,7 +39,7 @@ public class UserInterface {
                 break;
             case SELECTMAP: input = getInput(additionalString);
                 break;
-            case MOVEMENT:  input = getInput(additionalString + "  w - UP\n  s - DOWN\n  a - LEFT\n  d - RIGHT\n\n  ");
+            case MOVEMENT:  input = getInput(additionalString + "  w = UP\n  s = DOWN\n  a = LEFT\n  d = RIGHT\n\n  ");
                 break;
 
         }
