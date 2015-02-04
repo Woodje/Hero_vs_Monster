@@ -10,7 +10,7 @@ public class Hero extends Character {
     /** Represents the experience. */
     private int experience;
 
-
+    /** Represents the max amount of experience. */
     private int maxExperience;
 
     /**
@@ -49,13 +49,17 @@ public class Hero extends Character {
 
     }
 
-
+    /** Gets the max amount of experience. */
     public int getMaxExperience() {
 
         return maxExperience;
 
     }
 
+    /**
+     * Calls the setLevel function in Character and overrides the function to set the max amount of experience.
+     * @param level - The level.
+     */
     @Override
     public void setLevel(int level) {
 
