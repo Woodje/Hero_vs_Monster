@@ -26,7 +26,7 @@ public class Character {
     /** The characters location on the map. */
     private Point location;
 
-    /**  */
+    /** The previous location on the map */
     private Point previousLocation;
 
     /** The texture of the character */
@@ -134,6 +134,7 @@ public class Character {
 
     }
 
+    /** Gets the previous location on the map */
     public Point getPreviousLocation() {
 
         return previousLocation;
