@@ -26,6 +26,9 @@ public class Character {
     /** The characters location on the map. */
     private Point location;
 
+    /**  */
+    private Point previousLocation;
+
     /** The texture of the character */
     private String[] texture;
 
@@ -65,7 +68,7 @@ public class Character {
     /** Gets the level of the character. */
     public int getLevel() {
 
-        return  level;
+        return level;
 
     }
 
@@ -115,11 +118,12 @@ public class Character {
 
     /**
      * Sets the characters location on the map.
-     * @param point - location on the map.
+     * @param location - location on the map.
      */
-    public void setLocation(Point point) {
+    public void setLocation(Point location) {
 
-        this.location = point;
+        previousLocation = this.location;
+        this.location = location;
 
     }
 
@@ -127,6 +131,12 @@ public class Character {
     public Point getLocation() {
 
         return location;
+
+    }
+
+    public Point getPreviousLocation() {
+
+        return previousLocation;
 
     }
 
