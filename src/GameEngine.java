@@ -37,7 +37,7 @@ public class GameEngine {
     /** Represent the user for the first menu. */
     public void initializeGame() {
 
-        userInterface.drawToScreen("  Welcome\n");
+        userInterface.drawToScreen("  Welcome\n  --------------");
 
         int input = convertToInteger(userInterface.loadMenu(menu.FIRST, ""));
 
@@ -78,20 +78,137 @@ public class GameEngine {
 
         while(true) {
 
+            userInterface.drawToScreen(getStats() + map.getMap());
+
+            processUserInput(userInterface.loadMenu(menu.MOVEMENT, "  Where to go?  "));
+
             userInterface.drawToScreen(map.getMap());
 
-            String input = userInterface.loadMenu(menu.MOVEMENT, "  Where to go?\n");
+            moveMonsters();
 
-            if (input.equals("w"))
-                moveCharacter(characters.get(0), new Point(0, -1));
-            if (input.equals("s"))
-                moveCharacter(characters.get(0), new Point(0, 1));
-            if (input.equals("a"))
-                moveCharacter(characters.get(0), new Point(-1, 0));
-            if (input.equals("d"))
-                moveCharacter(characters.get(0), new Point(1, 0));
+            Character[] charactersFighting = getCharactersFighting();
+
+            if (charactersFighting != null) {
+
+                CombatScene combatScene = new CombatScene(charactersFighting[0], charactersFighting[1]);
+
+                userInterface.drawToScreen(getStats() + map.getMap());
+
+                userInterface.getInput("  You have entered combat, press 'ENTER' to start the the fight!");
+
+                userInterface.drawToScreen(combatScene.getCombatScene());
+
+                userInterface.getInput("  Winner: " + combatScene.getWinner().getName() + "\n  Loser: " + combatScene.getLoser().getName());
+
+
+            }
 
         }
+
+    }
+
+    private Character[] getCharactersFighting() {
+
+        Character[] charactersFighting = new Character[2];
+
+        int x = 0;
+
+        for (int i = 0; i < characters.size(); i++)
+            if (characters.get(i).getTexture() == map.fightTexture) {
+
+                charactersFighting[x] = characters.get(i);
+
+                x++;
+
+            }
+
+        if (x < 1)
+            return null;
+
+        return charactersFighting;
+
+    }
+
+    /** Return a string representing the stats for each character in the game. */
+    public String getStats() {
+
+        String statsIndicator = "";
+
+        for (Character character : characters)
+            if (character instanceof Hero) {
+
+                statsIndicator +=   "  (" + character.getName() + ") - " +
+                        "Level: " + character.getLevel() + " - " +
+                        "Health: " + character.getHealth() + "/" + character.getMaxHealth() + " - " +
+                        "XP: " + ((Hero) character).getExperience() + "/" + ((Hero) character).getMaxExperience() + "\n";
+            }
+            else {
+
+                statsIndicator +=   "  (" + character.getName() + ") - " +
+                        "Level: " + character.getLevel() + " - " +
+                        "Health: " + character.getHealth() + "/" + character.getMaxHealth() + "\n";
+            }
+
+        return statsIndicator;
+
+    }
+
+    /**
+     * Do the appropriate action according to the users input.
+     * @param input - This should be the the users input.
+     */
+    private void processUserInput(String input) {
+
+        if (input.toCharArray().length == 1) {
+
+            switch (input.toCharArray()[0]) {
+
+                case 'w':   for (Character hero : characters)
+                                if (hero instanceof Hero)
+                                    moveCharacter(hero, new Point(0, -1));
+
+                            break;
+
+                case 's':   for (Character hero : characters)
+                                if (hero instanceof Hero)
+                                    moveCharacter(hero, new Point(0, 1));
+
+                            break;
+
+                case 'a':   for (Character hero : characters)
+                                if (hero instanceof Hero)
+                                    moveCharacter(hero, new Point(-1, 0));
+
+                            break;
+
+                case 'd':   for (Character hero : characters)
+                                if (hero instanceof Hero)
+                                    moveCharacter(hero, new Point(1, 0));
+
+                            break;
+
+            }
+
+        }
+
+    }
+
+    /**
+     * Move all monsters within the characters list.
+     * X and Y movements are randomly chosen from -1 to 1.
+     */
+    private void moveMonsters() {
+
+        for (Character monster : characters)
+            if (monster instanceof Monster) {
+
+                int xMovement = (int) (Math.random() * 3) - 1,
+                    yMovement = (int) (Math.random() * 3) - 1;
+
+                moveCharacter(monster, new Point(xMovement, yMovement));
+
+            }
+
     }
 
     /** Exits the game and prints a little message */
@@ -114,8 +231,21 @@ public class GameEngine {
 
         Point newLocation = new Point(point.x + character.getLocation().x, point.y + character.getLocation().y);
 
-        if (map.moveTextureLocation(oldLocation, newLocation).contains("Success"))
+        String result = map.moveTextureLocation(oldLocation, newLocation);
+
+        if (result.contains("Success")) {
+
             character.setLocation(newLocation);
+
+            if (result.contains("Hero") || result.contains("Monster")) {
+
+                for (Character characterCollided : characters)
+                    if (character.getLocation().equals(characterCollided.getLocation()))
+                        characterCollided.setTexture(map.fightTexture);
+
+            }
+
+        }
 
     }
 
@@ -129,7 +259,7 @@ public class GameEngine {
 
             userInterface.drawToScreen("  Create hero\n  ---------------");
 
-            Character hero = new Character(userInterface.getInput("  Name your hero: "), 3);
+            Hero hero = new Hero(userInterface.getInput("  Name your hero: "), 3);
 
             hero.setLevel(1);
 
@@ -176,7 +306,7 @@ public class GameEngine {
         }
         else {
 
-            Character monster = new Character("MONSTER1", 1);
+            Monster monster = new Monster("MONSTER1", 1);
 
             monster.setLevel(1);
 
@@ -212,7 +342,7 @@ public class GameEngine {
 
                 for (int i = 0; i < map.getTextureLocations(map.monsterTexture).size(); i++) {
 
-                    monster = new Character("MONSTER" + String.valueOf(i + 1), 1);
+                    monster = new Monster("MONSTER" + String.valueOf(i + 1), 1);
 
                     monster.setLevel(1);
 

@@ -108,7 +108,7 @@ public class Map {
         for (int i = 0; i < files.length; i++)
             fileList += "  " + String.valueOf(i + 1) + " - " + files[i].getName() + "\n";
 
-        return fileList;
+        return fileList + "  ";
 
     }
 
@@ -209,11 +209,17 @@ public class Map {
 
         if (map[toPoint.x][toPoint.y] == floorTexture) {
 
+            if (map[fromPoint.x][fromPoint.y] == fightTexture)
+                result = "Failure: Fight";
+            else {
+
             map[toPoint.x][toPoint.y] = map[fromPoint.x][fromPoint.y];
 
             map[fromPoint.x][fromPoint.y] = floorTexture;
 
             result = "Success: Floor";
+
+            }
 
         }
         else if (map[fromPoint.x][fromPoint.y] == heroTexture && map[toPoint.x][toPoint.y] == monsterTexture) {
