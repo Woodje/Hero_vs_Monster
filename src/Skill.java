@@ -6,13 +6,13 @@
  */
 public class Skill {
 
-    /* The name of the skill. */
+    /** The name of the skill. */
     private String name;
 
-    /* The minimum damage the skill can deal. */
+    /** The minimum damage the skill can deal. */
     private int minDamage;
 
-    /* The maximum damage the skill can deal. */
+    /** The maximum damage the skill can deal. */
     private int maxDamage;
 
     /**
@@ -29,21 +29,21 @@ public class Skill {
 
     }
 
-    /* Gets the name of the skill */
+    /** Gets the name of the skill */
     public String getName() {
 
         return name;
 
     }
 
-    /* Gets the minimum damage of the skill */
+    /** Gets the minimum damage of the skill */
     public int getMinDamage() {
 
         return minDamage;
 
     }
 
-    /* Gets the maximum damage of the skill */
+    /** Gets the maximum damage of the skill */
     public int getMaxDamage() {
 
         return maxDamage;
