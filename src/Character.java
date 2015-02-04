@@ -17,6 +17,9 @@ public class Character {
     /** The characters amount of health. */
     private int health;
 
+
+    private int maxHealth;
+
     /** The amount of damage that the character can deal. */
     private int damage;
 
@@ -55,7 +58,7 @@ public class Character {
     public void setLevel(int level) {
 
         this.level = level;
-
+        maxHealth = 100 * level;
     }
 
     /** Gets the level of the character. */
@@ -71,7 +74,10 @@ public class Character {
      */
     public void setHealth(int health) {
 
-        this.health = health;
+        if (health > maxHealth)
+            this.health = maxHealth;
+        else
+            this.health = health;
 
     }
 
@@ -81,6 +87,14 @@ public class Character {
         return health;
 
     }
+
+    /**  */
+    public int getMaxHealth() {
+
+        return maxHealth;
+
+    }
+
 
     /**
      * Sets the amount of damage that the character can deal.
