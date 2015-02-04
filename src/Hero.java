@@ -10,6 +10,9 @@ public class Hero extends Character {
     /** Represents the experience. */
     private int experience;
 
+
+    private int maxExperience;
+
     /**
      * Constructor.
      * @param name - The name of the hero.
@@ -28,6 +31,14 @@ public class Hero extends Character {
     public void setExperience(int experience) {
 
         this.experience = experience;
+        if (experience >= maxExperience) {
+
+            this.experience = experience - maxExperience;
+            setLevel(getLevel() + 1);
+
+        }
+        else
+            this.experience = experience;
 
     }
 
@@ -35,6 +46,21 @@ public class Hero extends Character {
     public int getExperience() {
 
       return experience;
+
+    }
+
+
+    public int getMaxExperience() {
+
+        return maxExperience;
+
+    }
+
+    @Override
+    public void setLevel(int level) {
+
+        super.setLevel(level);
+        maxExperience = 200 * level;
 
     }
 
