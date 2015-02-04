@@ -64,7 +64,7 @@ public class GameEngine {
 
         createCharacter(false);
 
-        userInterface.getInput("Press 'ENTER' to start playing");
+        userInterface.getInput("  Press 'ENTER' to start playing");
 
         gameLoop();
 
@@ -84,9 +84,12 @@ public class GameEngine {
 
             userInterface.drawToScreen(map.getMap());
 
-            moveMonsters();
-
             Character[] charactersFighting = getCharactersFighting();
+
+            if (charactersFighting == null)
+                moveMonsters();
+
+            charactersFighting = getCharactersFighting();
 
             if (charactersFighting != null) {
 
@@ -94,12 +97,18 @@ public class GameEngine {
 
                 userInterface.drawToScreen(getStats() + map.getMap());
 
-                userInterface.getInput("  You have entered combat, press 'ENTER' to start the the fight!");
+                userInterface.getInput("  You have entered combat, press 'ENTER' to start the fight!");
 
-                userInterface.drawToScreen(combatScene.getCombatScene());
+                while (combatScene.getWinner() == null) {
 
-                userInterface.getInput("  Winner: " + combatScene.getWinner().getName() + "\n  Loser: " + combatScene.getLoser().getName());
+                    userInterface.drawToScreen(combatScene.getCombatScene());
 
+                    String result = combatScene.attackWithSkill(userInterface.loadMenu(menu.COMBAT, ""));
+
+                    userInterface.drawToScreen(combatScene.getCombatScene());
+
+                    userInterface.getInput(result + "\n  Press 'ENTER' to continue");
+                }
 
             }
 
@@ -124,6 +133,19 @@ public class GameEngine {
 
         if (x < 1)
             return null;
+        else {
+
+            if (charactersFighting[0] instanceof Monster) {
+
+                Character monster = charactersFighting[0];
+
+                charactersFighting[0] = charactersFighting[1];
+
+                charactersFighting[1] = monster;
+
+            }
+
+        }
 
         return charactersFighting;
 

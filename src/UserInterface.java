@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class UserInterface {
 
     /** Enumerations used for representing the different kind of menus that is needed. */
-    public enum menu { FIRST, SHOWMAP, SELECTMAP, MOVEMENT };
+    public enum menu { FIRST, SHOWMAP, SELECTMAP, MOVEMENT, COMBAT };
 
     /**
      * Prints the provided string to the screen.
@@ -47,7 +47,10 @@ public class UserInterface {
             case SELECTMAP: input = getInput(additionalString);
                 break;
 
-            case MOVEMENT:  input = getInput(additionalString + "[w]UP [s]DOWN [a]LEFT [d]RIGHT\n\n  ");
+            case MOVEMENT:  input = getInput(additionalString + "[w]UP [s]DOWN [a]LEFT [d]RIGHT\n  ");
+                break;
+
+            case COMBAT:  input = getInput("  What skill to use? " + additionalString);
                 break;
 
         }
