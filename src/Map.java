@@ -42,7 +42,7 @@ public class Map {
      */
     public Map() {
 
-        mapDirectory = System.getProperty("user.dir");
+        mapDirectory = System.getProperty("user.dir") + "\\maps\\";
 
     }
 
