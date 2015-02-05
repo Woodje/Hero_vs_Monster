@@ -61,7 +61,8 @@ public class Character {
     public void setLevel(int level) {
 
         this.level = level;
-        maxHealth = 100 * level;
+        health = (maxHealth = 100 * level);
+        damage = this.level;
 
     }
 

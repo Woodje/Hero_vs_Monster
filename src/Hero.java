@@ -30,7 +30,6 @@ public class Hero extends Character {
      */
     public void setExperience(int experience) {
 
-        this.experience = experience;
         if (experience >= maxExperience) {
 
             this.experience = experience - maxExperience;
