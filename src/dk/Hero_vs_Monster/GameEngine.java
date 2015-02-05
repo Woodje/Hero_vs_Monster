@@ -1,9 +1,10 @@
-package com.company;
+package dk.Hero_vs_Monster;
+
+import dk.Hero_vs_Monster.Character;
 
 import java.awt.*;
 import java.util.ArrayList;
-
-import com.company.UserInterface.menu;
+import dk.Hero_vs_Monster.UserInterface.menu;
 
 /**
  * GameEngine - Used for controlling the basic logic of the game.
@@ -14,7 +15,7 @@ import com.company.UserInterface.menu;
 public class GameEngine {
 
     /** This is the list used for storing all characters in the game. */
-    private ArrayList<Character> characters;
+    private ArrayList<dk.Hero_vs_Monster.Character> characters;
 
     /** This is used for map operations. */
     private Map map;

@@ -1,6 +1,4 @@
-package com.company;
-
-import javax.swing.text.MutableAttributeSet;
+package dk.Hero_vs_Monster;
 
 /**
  * GameScene.java - Used for representing the map as a string of characters.
@@ -10,7 +8,7 @@ import javax.swing.text.MutableAttributeSet;
  */
 public class CombatScene {
 
-    private Character character1, character2;
+    private dk.Hero_vs_Monster.Character character1, character2;
 
     private Character winner, loser;
 

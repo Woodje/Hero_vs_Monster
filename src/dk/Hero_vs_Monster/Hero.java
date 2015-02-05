@@ -1,13 +1,13 @@
-package com.company;
+package dk.Hero_vs_Monster;
 
 /**
  * Hero.java - Represents a Hero.
  * @Author Simon Jon Pedersen.
  * @Author Kristoffer Broch Møller.
  * @Version 1.0 04/02-2015
- * @see Character
+ * @see dk.Hero_vs_Monster.Character
  */
-public class Hero extends Character {
+public class Hero extends dk.Hero_vs_Monster.Character {
 
     /** Represents the experience. */
     private int experience;

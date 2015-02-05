@@ -1,4 +1,4 @@
-package com.company;
+package dk.Hero_vs_Monster;
 
 public class Main {
 
