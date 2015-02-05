@@ -80,8 +80,14 @@ public class Character {
 
         if (health > maxHealth)
             this.health = maxHealth;
-        else
-            this.health = health;
+        else {
+
+            if (health < 0)
+                this.health = 0;
+            else
+                this.health = health;
+
+        }
 
     }
 
