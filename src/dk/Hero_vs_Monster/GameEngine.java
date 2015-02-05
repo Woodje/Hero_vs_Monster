@@ -1,7 +1,5 @@
 package dk.Hero_vs_Monster;
 
-import dk.Hero_vs_Monster.Character;
-
 import java.awt.*;
 import java.util.ArrayList;
 import dk.Hero_vs_Monster.UserInterface.menu;
@@ -10,12 +8,12 @@ import dk.Hero_vs_Monster.UserInterface.menu;
  * GameEngine - Used for controlling the basic logic of the game.
  * @author Simon Jon Pedersen
  * @author Kristoffer Broch Møller
- * @version 1.0 03/02-2015.
+ * @version 1.0 05/02-2015.
  */
 public class GameEngine {
 
     /** This is the list used for storing all characters in the game. */
-    private ArrayList<dk.Hero_vs_Monster.Character> characters;
+    private ArrayList<Character> characters;
 
     /** This is used for map operations. */
     private Map map;
@@ -35,7 +33,7 @@ public class GameEngine {
 
     }
 
-    /** Represent the user for the first menu. */
+    /** Represent the user for the first menu, and wait for an input. */
     public void initializeGame() {
 
         userInterface.drawToScreen("  Welcome\n  --------------");
@@ -58,7 +56,11 @@ public class GameEngine {
 
     }
 
-    /** Starts up the necessary precautions before starting the games loop. */
+    /**
+     * Starts up the necessary precautions before starting the games loop.
+     * Minimum one hero and one monster is created.
+     * The games loop will be started after an input is given.
+     */
     private void startGame() {
 
         createCharacter(true);
@@ -73,6 +75,13 @@ public class GameEngine {
 
     /**
      *  This is the games loop from where the actual basic logic of the game takes place.
+     *  Step 1: A user is prompted for an input for where to go.
+     *  Step 2: If no fight has occurred, the move the monsters.
+     *  Step 3: If a fight has occurred, the enter a combat scene.
+     *  Step 4: If a monster won the combat, the send the hero back to his previous location.
+     *  Step 5: If the monster lost, the delete him from the game, and reward the hero with experience.
+     *  Step 6: If there are no more monster left in the map, the spawn as many monsters at the hero's level. (Max 5)
+     *  Step 7: Start over by prompting for an input for where to go.
      *  The user is prompt for an input for each run through.
      */
     private void gameLoop() {
@@ -181,6 +190,11 @@ public class GameEngine {
 
     }
 
+    /**
+     * Return a Character array containing the two fighting characters.
+     * If nothing is found, null is returned.
+     * The first character in the returned Character array represents the hero character.
+     */
     private Character[] getCharactersFighting() {
 
         Character[] charactersFighting = new Character[2];
@@ -241,7 +255,7 @@ public class GameEngine {
     }
 
     /**
-     * Do the appropriate action according to the users input.
+     * Do the appropriate hero movement according to the users input.
      * @param input - This should be the the users input.
      */
     private void processUserInput(String input) {
@@ -298,7 +312,7 @@ public class GameEngine {
 
     }
 
-    /** Exits the game and prints a little message */
+    /** Exits the game and prints a little kind message */
     private void exitGame() {
 
         userInterface.drawToScreen("Thank you for playing...");
@@ -309,6 +323,7 @@ public class GameEngine {
 
     /**
      * Move the given character with the amount of values from the provided point.
+     * This is only done if a success is returned.
      * @param character - This is the character that should be moved.
      * @param point - This is for how much the characters location should be moved.
      */
@@ -367,7 +382,9 @@ public class GameEngine {
                 if (map.getTextureLocations(map.floorTexture).size() == 0) {
 
                     userInterface.getInput("Error using map, no floor textures detected.\nPress 'ENTER' to start over...");
+
                     characters.clear();
+
                     createCharacter(true);
 
                 }
@@ -406,7 +423,9 @@ public class GameEngine {
                 if (map.getTextureLocations(map.floorTexture).size() == 0){
 
                     userInterface.getInput("Error using map, no floor textures detected.\nPress 'ENTER' to start over...");
+
                     characters.clear();
+
                     createCharacter(false);
 
                 }
@@ -445,6 +464,12 @@ public class GameEngine {
 
     }
 
+    /**
+     * Spawn the specified amount of monsters of the provided level.
+     * A maximum of five monsters will be spawned.
+     * @param amount - This is the amount of monsters to create.
+     * @param level - This is of what level the monsters should be.
+     */
     private void spawnExtraMonsters(int amount, int level) {
 
         if (amount > 5)
@@ -481,12 +506,14 @@ public class GameEngine {
         if (showOnly) {
 
             userInterface.drawToScreen("  Display Maps\n  -------------");
+
             input = convertToInteger(userInterface.loadMenu(menu.SHOWMAP, map.getMaps()));
 
         }
         else {
 
             userInterface.drawToScreen("  Select Map\n  ------------");
+
             input = convertToInteger(userInterface.loadMenu(menu.SELECTMAP, map.getMaps()));
 
         }
@@ -496,7 +523,9 @@ public class GameEngine {
             case 0:  if (showOnly) {
 
                         initializeGame();
+
                         break;
+
                      }
             default: if (input <= map.getMapsFiles().length && input >= 0) {
 
@@ -505,7 +534,9 @@ public class GameEngine {
                         if (showOnly) {
 
                             userInterface.drawToScreen("");
+
                             userInterface.getInput(map.getMap() + "Press 'ENTER' to continue...");
+
                             listMaps(true);
 
                         }
@@ -535,9 +566,11 @@ public class GameEngine {
         } catch(NumberFormatException e) {
 
             return -1;
+
         }
 
         return value;
+
     }
 
 }

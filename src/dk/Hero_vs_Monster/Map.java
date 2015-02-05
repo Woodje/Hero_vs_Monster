@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Map.java - Used for representing the map as a string of characters.
  * @author Simon Jon Pedersen
  * @author Kristoffer Broch Møller
- * @version 1.0 03/02-2015.
+ * @version 1.0 05/02-2015.
  */
 public class Map {
 
@@ -38,7 +38,7 @@ public class Map {
 
     /**
      * Constructor.
-     * As default, mapDirectory will be set to be equal to the user working directory.
+     * As default, mapDirectory will be set to be equal to a subfolder called maps in the user working directory.
      */
     public Map() {
 
@@ -65,7 +65,7 @@ public class Map {
 
     /**
      * Fill the multidimensional map array with textures according to the specified file name.
-     * @param mapFileName - This must be a files name with its extension included.
+     * @param mapFileName - This must be a file's name with its extension included.
      */
     public void setMap(String mapFileName) {
 
@@ -112,7 +112,7 @@ public class Map {
 
     }
 
-    /** Return string that represents the map. */
+    /** Return string that represents the map in the form of characters. */
     public String getMap() {
 
         String stringMap = "  ";
@@ -152,7 +152,7 @@ public class Map {
 
     }
 
-    /** Return a file array of files that are in the maps directory. */
+    /** Return a file array of map files that are in the maps directory. */
     public File[] getMapsFiles() {
 
         FilenameFilter filenameFilter = new FilenameFilter() {
@@ -173,7 +173,6 @@ public class Map {
     /**
      * Return all the occurrences of the specified texture.
      * @param texture - This is what kind of texture that are to be located.
-     *
      */
     public ArrayList<Point> getTextureLocations(String[] texture) {
 
@@ -197,7 +196,7 @@ public class Map {
 
     /**
      * Move a texture from a given point to another point on the map.
-     * This will only work if no wall is is in the way.
+     * This will only work if no wall is in the way or fight is at the fromPoint.
      * A result in the form of string will also be returned.
      * @param fromPoint - This is from where the texture should be taken.
      * @param toPoint - This is to where the texture should be moved to.
@@ -245,7 +244,7 @@ public class Map {
     }
 
     /**
-     * Return the lines from a specified files path.
+     * Return the lines from a specified file's path.
      * @param filePath - This must be a file's path and not a directories path.
      */
     private ArrayList<String> getLinesFromFile(String filePath) {

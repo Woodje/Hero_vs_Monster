@@ -1,19 +1,27 @@
 package dk.Hero_vs_Monster;
 
 /**
- * GameScene.java - Used for representing the map as a string of characters.
+ * CombatScene.java - Used for representing the combat as a string of characters.
  * @author Simon Jon Pedersen
  * @author Kristoffer Broch Møller
- * @version 1.0 04/02-2015.
+ * @version 1.0 05/02-2015.
  */
 public class CombatScene {
 
-    private dk.Hero_vs_Monster.Character character1, character2;
+    /** This represents the two fighting characters. */
+    private Character character1, character2;
 
+    /** This represents the winner and loser of the fight. */
     private Character winner, loser;
 
+    /** This is the representation of the combat scene in the form of a string of characters. */
     private String combatScene;
 
+    /**
+     * Constructor.
+     * @param character1 - This is the first fighting character. This is assumed to be the hero.
+     * @param character2 - This is the second fighting character. This is assumed to be a monster.
+     */
     public CombatScene(Character character1, Character character2) {
 
         this.character1 = character1;
@@ -21,6 +29,10 @@ public class CombatScene {
 
     }
 
+    /**
+     * Return a string in the form of characters, representing the combat scenes characters stats.
+     * The string is populated with the the characters name, level, health and their skills.
+     */
     public String getCombatScene() {
 
         int charsAmount = 75;
@@ -89,17 +101,27 @@ public class CombatScene {
 
     }
 
-    private String addEmptySpace(int chars) {
+    /**
+     * Return a string containing empty space. Used for constructing the combat scene.
+     * @param spaces - This is the amount of empty spaces needed to be returned as a string.
+     */
+    private String addEmptySpace(int spaces) {
 
-        String stringOfChars = "";
+        String stringOfEmptySpace = "";
 
-        for (int i = 0; i < chars; i++)
-            stringOfChars += " ";
+        for (int i = 0; i < spaces; i++)
+            stringOfEmptySpace += " ";
 
 
-        return stringOfChars;
+        return stringOfEmptySpace;
     }
 
+    /**
+     * Attack a character with the skill that is defined by the input.
+     * A result in the form of a string will also be returned.
+     * @param input - This must be the index of the skill to use.
+     * @param attackFromHero - This is to determine if the attack is made by a hero or a monster.
+     */
     public String attackWithSkill(String input, boolean attackFromHero) {
 
         String result = "  No skill entered!";
@@ -155,6 +177,13 @@ public class CombatScene {
 
     }
 
+    /**
+     * Calculate the damage dealt by the specified character and it's index of skill.
+     * A result in the form of a integer will be returned.
+     * The value is randomly chosen between the skills minimum and maximum damage and multiplied by the characters damage.
+     * @param character - This must a character.
+     * @param skillIndex - This must be the index of the skill to use.
+     */
     private int calculateCharacterDamage(Character character, int skillIndex) {
 
         int damage = (int) (Math.random() * (character.getSkillArray()[skillIndex].getMaxDamage() - character.getSkillArray()[skillIndex].getMinDamage()) + 1);
@@ -166,18 +195,25 @@ public class CombatScene {
         return damage;
     }
 
+    /** Return the winning character */
     public Character getWinner() {
 
         return winner;
 
     }
 
+    /** Return the losing character */
     public Character getLoser() {
 
         return loser;
 
     }
 
+    /**
+     * Return a string texture depending on the given index provided.
+     * Four textures is defined.
+     * @param textureNumber - This must be a value between 0 and 3.
+     */
     public String getTextures(int textureNumber) {
 
         String[] textures = new String[4];

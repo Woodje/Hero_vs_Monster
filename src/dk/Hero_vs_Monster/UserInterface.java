@@ -6,11 +6,11 @@ import java.util.Scanner;
  * UserInterface.java - Used for displaying the game and retrieving inputs.
  * @author Simon Jon Pedersen
  * @author Kristoffer Broch Møller
- * @version 1.0 03/02-2015.
+ * @version 1.0 05/02-2015.
  */
 public class UserInterface {
 
-    /** Enumerations used for representing the different kind of menus that is needed. */
+    /** Enumerations used for representing the different kind of menu's that is needed. */
     public enum menu { FIRST, SHOWMAP, SELECTMAP, MOVEMENT, COMBAT };
 
     /**
@@ -30,7 +30,7 @@ public class UserInterface {
     /**
      * Print the specified menu type to the screen and return the inputs given for this menu.
      * @param menuType - This is what type of menu to use.
-     * @param additionalString - This is a string that can be used for a little more custom menu.
+     * @param additionalString - This is a string that can be used for creating a little more custom menu.
      */
     public String loadMenu(menu menuType, String additionalString) {
 
