@@ -116,8 +116,8 @@
       <file leaf-file-name="GameEngine.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/dk/Hero_vs_Monster/GameEngine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.177193" vertical-offset="0" max-vertical-offset="1394">
-              <caret line="557" column="0" selection-start-line="557" selection-start-column="0" selection-end-line="557" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.1491228" vertical-offset="0" max-vertical-offset="1394">
+              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="docComment;method#GameEngine#0;class#GameEngine#0" expanded="false" />
@@ -725,8 +725,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dk/Hero_vs_Monster/GameEngine.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.177193" vertical-offset="0" max-vertical-offset="1394">
-          <caret line="557" column="0" selection-start-line="557" selection-start-column="0" selection-end-line="557" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.1491228" vertical-offset="0" max-vertical-offset="1394">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="docComment;method#GameEngine#0;class#GameEngine#0" expanded="false" />
