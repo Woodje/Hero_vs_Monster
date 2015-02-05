@@ -38,7 +38,7 @@
       <w>176</w>
       <h>40</h>
     </coordinates>
-    <panel_attributes>H&amp;M
+    <panel_attributes>Main
 --
 _+ main(String args[]) : void_</panel_attributes>
     <additional_attributes/>
@@ -269,7 +269,7 @@ Creates&gt;</panel_attributes>
 --
 - name : String
 - minDamage : int
-- maxDamage :int
+- maxDamage : int
 --
 + getName() : String
 + getMinDamage() : int
