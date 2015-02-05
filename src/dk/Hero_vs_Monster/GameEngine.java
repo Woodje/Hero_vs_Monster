@@ -365,10 +365,6 @@ public class GameEngine {
 
             hero.setLevel(1);
 
-            hero.setHealth(100);
-
-            hero.setDamage(1);
-
             hero.setSkillArray(new Skill("Basic", 1, 10), 0);
             hero.setSkillArray(new Skill("Medium", 3, 6), 1);
             hero.setSkillArray(new Skill("High", 6, 8), 2);

@@ -6,7 +6,7 @@ package dk.Hero_vs_Monster;
  * @author Kristoffer Broch Møller
  * @version 1.0 05/02-2015.
  */
-public class Monster extends dk.Hero_vs_Monster.Character {
+public class Monster extends Character {
 
     /**
      * Constructor.

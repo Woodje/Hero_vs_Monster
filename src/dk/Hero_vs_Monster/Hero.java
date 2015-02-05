@@ -5,7 +5,7 @@ package dk.Hero_vs_Monster;
  * @Author Simon Jon Pedersen.
  * @Author Kristoffer Broch Møller.
  * @Version 1.0 05/02-2015
- * @see dk.Hero_vs_Monster.Character
+ * @see Character
  */
 public class Hero extends Character {
 
