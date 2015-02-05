@@ -100,7 +100,7 @@ public class Map {
 
         String fileList = "No maps found!";
 
-        File[] files = getMapsFiles();
+        File[] files = getMapFiles();
 
         if (files.length > 0)
             fileList = "";
@@ -143,7 +143,7 @@ public class Map {
      */
     public String getMapFileName(int index) {
 
-        File[] files = getMapsFiles();
+        File[] files = getMapFiles();
 
         if (index - 1 > files.length -1)
             throw new ArrayIndexOutOfBoundsException("Amount of files: " + files.length + ". Index: " + index + " does not exist.");
@@ -153,7 +153,7 @@ public class Map {
     }
 
     /** Return a file array of map files that are in the maps directory. */
-    public File[] getMapsFiles() {
+    public File[] getMapFiles() {
 
         FilenameFilter filenameFilter = new FilenameFilter() {
             @Override

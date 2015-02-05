@@ -1,36 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="12.2">
-  <zoom_level>9</zoom_level>
+  <zoom_level>8</zoom_level>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>522</x>
-      <y>414</y>
-      <w>198</w>
-      <h>243</h>
+      <x>560</x>
+      <y>464</y>
+      <w>288</w>
+      <h>240</h>
     </coordinates>
     <panel_attributes>GameEngine
 --
-- hero : Hero
-- monster : Monster
+- characters : ArrayList&lt;Character&gt;
 - map : Map
 - userInterface : UserInterface
-- combatScene : CombatScene
-- outputStrings : String[]
 --
-- startGame() :void
++ initializeGame() : void
+- startGame() : void
+- gameLoop() : void
+- getCharactersFighting() : Character[]
+- getStats() : String
+- processUserInput(String input) : void
+- moveMonsters() : void
 - exitGame() : void
-- createMap() : Map
-- sendToScreen() : void</panel_attributes>
+- moveCharacter(Character character, Point point) : void
+- createCharacter(boolean userDefined) : void
+- spawnExtraMonsters(int amount, int level) : void
+- listMaps(boolean showOnly) : void
+- convertToInteger(String string) : int</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>72</x>
-      <y>414</y>
-      <w>198</w>
-      <h>54</h>
+      <x>112</x>
+      <y>288</y>
+      <w>176</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>H&amp;M
 --
@@ -40,71 +46,85 @@ _+ main(String args[]) : void_</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>243</x>
-      <y>378</y>
-      <w>296</w>
-      <h>63</h>
+      <x>264</x>
+      <y>256</y>
+      <w>312</w>
+      <h>232</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
 m2=1
 Creates&gt;</panel_attributes>
-    <additional_attributes>27;45;279;45</additional_attributes>
+    <additional_attributes>24;40;184;40;216;40;232;40;264;40;264;216;296;216</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>828</x>
-      <y>540</y>
-      <w>234</w>
-      <h>81</h>
+      <x>112</x>
+      <y>680</y>
+      <w>320</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>UserInterface
 --
- 
++ menu : enum
 --
-+ getInput() : int
-+ drawScreen(String outputString) : void
-</panel_attributes>
++ drawToScreen(String outputString) : void
++ loadMenu(menu menuType, String additionalString) : String
++ getInput(String promptString) : String</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>828</x>
-      <y>495</y>
-      <w>234</w>
-      <h>36</h>
+      <x>936</x>
+      <y>688</y>
+      <w>352</w>
+      <h>184</h>
     </coordinates>
     <panel_attributes>CombatScene
 --
-</panel_attributes>
+- character1 : Character
+- character2 : Character
+- winner : Character
+- loser : Character
+- combatScene : String
+--
++ getCombatScene() : String
+- addEmptySpace(int spaces) : String
++ attackWithSkill(String input, boolean attackFromHero) : String
+- calculateCharacterDamage(Character character, int skillIndex) : int
++ getWinner() : Character
++ getLoser() : Character
++ getTextures(int textureNumber) : String</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>828</x>
-      <y>360</y>
-      <w>234</w>
-      <h>81</h>
+      <x>936</x>
+      <y>416</y>
+      <w>208</w>
+      <h>104</h>
     </coordinates>
     <panel_attributes>Hero
 --
 - experience : int
+- maxExperience : int
 --
 + setExperience(int experience) : void
 + getExperience() : int
-</panel_attributes>
++ getMaxExperience() : int
++ setLevel(int Level) : void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>828</x>
-      <y>450</y>
-      <w>234</w>
-      <h>36</h>
+      <x>936</x>
+      <y>568</y>
+      <w>208</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>Monster
 --</panel_attributes>
@@ -113,18 +133,21 @@ Creates&gt;</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1026</x>
-      <y>0</y>
-      <w>261</w>
-      <h>288</h>
+      <x>1112</x>
+      <y>32</y>
+      <w>208</w>
+      <h>320</h>
     </coordinates>
     <panel_attributes>Character
 --
 - name : String
 - level : int
 - health : int
+- maxHealth : int
 - damage : int
-- positionPoint : Point
+- location : Point
+- previousLocation : Point
+- texture : String[]
 - skillArray : Skill[]
 --
 + getName() : String
@@ -132,113 +155,115 @@ Creates&gt;</panel_attributes>
 + getLevel() : int
 + setHealth(int health) : void
 + getHealth() : int
-+ setDamage(int damage) : void
 + getDamage() : int
-+ setPositionPoint(Point positionPoint) : void
-+ getPositionPoint() : Point
-+ setSkillArray(Skill skill) : void
++ setLocation(Point location) : void
++ getLocation() : Point
++ getPreviousLocation() : Point
++ setTexture(String[] texture) : void
++ getTexture() : String[]
++ setSkillArray(Skill skill, int index) : void
 + getSkillArray() : Skill[]</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>693</x>
-      <y>504</y>
-      <w>152</w>
-      <h>63</h>
+      <x>408</x>
+      <y>648</y>
+      <w>168</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
 m2=1
 Displays&gt;</panel_attributes>
-    <additional_attributes>27;45;135;45</additional_attributes>
+    <additional_attributes>24;40;152;40</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>693</x>
-      <y>414</y>
-      <w>152</w>
-      <h>63</h>
+      <x>824</x>
+      <y>536</y>
+      <w>128</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
 m2=1
 Creates&gt;</panel_attributes>
-    <additional_attributes>27;45;135;45</additional_attributes>
+    <additional_attributes>24;40;112;40</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>693</x>
-      <y>378</y>
-      <w>152</w>
-      <h>63</h>
+      <x>824</x>
+      <y>432</y>
+      <w>128</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
 m2=1
 Creates&gt;</panel_attributes>
-    <additional_attributes>27;45;135;45</additional_attributes>
+    <additional_attributes>24;40;112;40</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>396</x>
-      <y>468</y>
-      <w>143</w>
-      <h>63</h>
+      <x>408</x>
+      <y>320</y>
+      <w>168</w>
+      <h>248</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
 m2=1
 &lt;Creates</panel_attributes>
-    <additional_attributes>27;45;126;45</additional_attributes>
+    <additional_attributes>24;40;24;40;40;40;56;40;64;40;72;40;80;40;88;40;96;40;96;232;152;232</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>693</x>
-      <y>459</y>
-      <w>152</w>
-      <h>63</h>
+      <x>824</x>
+      <y>656</y>
+      <w>128</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
 m2=1
 Creates&gt;</panel_attributes>
-    <additional_attributes>27;45;135;45</additional_attributes>
+    <additional_attributes>24;40;112;40</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>1035</x>
-      <y>261</y>
-      <w>152</w>
-      <h>125</h>
+      <x>1120</x>
+      <y>328</y>
+      <w>136</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>135;27;135;108;27;108</additional_attributes>
+    <additional_attributes>120;24;120;96;24;96</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>1035</x>
-      <y>261</y>
-      <w>152</w>
-      <h>215</h>
+      <x>1120</x>
+      <y>328</y>
+      <w>136</w>
+      <h>264</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>135;27;135;198;27;198</additional_attributes>
+    <additional_attributes>120;24;120;248;24;248</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>720</x>
-      <y>153</y>
-      <w>198</w>
-      <h>126</h>
+      <x>840</x>
+      <y>232</y>
+      <w>176</w>
+      <h>104</h>
     </coordinates>
     <panel_attributes>Skill (Interface?)
 --
@@ -255,28 +280,28 @@ Creates&gt;</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>891</x>
-      <y>216</y>
-      <w>152</w>
-      <h>63</h>
+      <x>992</x>
+      <y>288</y>
+      <w>136</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
 m2=*
 &lt;Creates</panel_attributes>
-    <additional_attributes>135;45;27;45</additional_attributes>
+    <additional_attributes>120;40;24;40</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>72</x>
-      <y>504</y>
-      <w>351</w>
-      <h>288</h>
+      <x>112</x>
+      <y>352</y>
+      <w>320</w>
+      <h>304</h>
     </coordinates>
     <panel_attributes>Map
 --
-- wallSymbols : char
+- wallSymbol : char
 - floorSymbol : char
 - heroSymbol : char
 - monsterSymbol : char
@@ -290,24 +315,28 @@ m2=*
 --
 + getMapDirectory() : String
 + setMap(String mapFileName) : void
++ getMaps() : String
 + getMap() : String
-+ getTextureLocation(String[] texture) : Point
-+ moveTextureLocation(String[] texture, Point point) : String
-- getLinesFromFile(String filePath) : ArrayList&lt;String&gt;</panel_attributes>
++ getMapFileName(int index) : String
++ getMapsFiles() : File[]
++ getTextureLocations(String[] texture) : ArrayList&lt;Point&gt;
++ setTextureLocation(String[] texture, Point point) : void
++ moveTextureLocation(Point fromPoint, Point toPoint) : String
++ getLinesFromFile(String filePath) : ArrayList&lt;String&gt;</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>1035</x>
-      <y>243</y>
-      <w>305</w>
-      <h>279</h>
+      <x>1264</x>
+      <y>312</y>
+      <w>112</w>
+      <h>400</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
 m2=2
 Uses&gt;</panel_attributes>
-    <additional_attributes>27;261;216;261;234;261;288;261;288;27;252;27</additional_attributes>
+    <additional_attributes>24;384;32;384;48;384;64;384;96;384;96;24;56;24</additional_attributes>
   </element>
 </diagram>

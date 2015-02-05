@@ -7,7 +7,7 @@ package dk.Hero_vs_Monster;
  * @Version 1.0 05/02-2015
  * @see dk.Hero_vs_Monster.Character
  */
-public class Hero extends dk.Hero_vs_Monster.Character {
+public class Hero extends Character {
 
     /** Represents the experience. */
     private int experience;

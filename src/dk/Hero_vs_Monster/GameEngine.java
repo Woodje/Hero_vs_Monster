@@ -527,7 +527,7 @@ public class GameEngine {
                         break;
 
                      }
-            default: if (input <= map.getMapsFiles().length && input >= 0) {
+            default: if (input <= map.getMapFiles().length && input >= 0) {
 
                         map.setMap(map.getMapFileName(input));
 
