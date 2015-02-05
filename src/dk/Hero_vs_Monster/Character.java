@@ -6,7 +6,7 @@ import java.awt.Point;
  * Character.java - Represents a single character.
  * @Author Simon Jon Pedersen.
  * @Author Kristoffer Broch Møller.
- * @Version 1.0 04/02-2015
+ * @Version 1.0 05/02-2015
  */
 public class Character {
 
@@ -19,7 +19,7 @@ public class Character {
     /** The characters amount of health. */
     private int health;
 
-    /** The characters max amount og health. */
+    /** The characters max amount of health. */
     private int maxHealth;
 
     /** The amount of damage that the character can deal. */
@@ -28,7 +28,7 @@ public class Character {
     /** The characters location on the map. */
     private Point location;
 
-    /** The previous location on the map */
+    /** The characters previous location on the map */
     private Point previousLocation;
 
     /** The texture of the character */
@@ -57,7 +57,8 @@ public class Character {
     }
 
     /**
-     * Sets the level of the character and adds max health corresponding to the level.
+     * Sets the level of the character.
+     * Sets max health and damage corresponding to the level.
      * @param level - The level.
      */
     public void setLevel(int level) {
@@ -105,16 +106,6 @@ public class Character {
     public int getMaxHealth() {
 
         return maxHealth;
-
-    }
-
-    /**
-     * Sets the amount of damage that the character can deal.
-     * @param damage - the damage amount.
-     */
-    public void setDamage(int damage) {
-
-        this.damage = damage;
 
     }
 
@@ -184,7 +175,7 @@ public class Character {
 
     }
 
-    /** Gets all the skills in the array. */
+    /** Gets all the skills in the skillArray. */
     public Skill[] getSkillArray() {
 
         return skillArray;

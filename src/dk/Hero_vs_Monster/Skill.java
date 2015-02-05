@@ -4,7 +4,7 @@ package dk.Hero_vs_Monster;
  * Skill.java - Represents a simple skill.
  * @Author Simon Jon Pedersen.
  * @Author Kristoffer Broch Møller.
- * @Version 1.0 02/02-2015
+ * @Version 1.0 05/02-2015
  */
 public class Skill {
 

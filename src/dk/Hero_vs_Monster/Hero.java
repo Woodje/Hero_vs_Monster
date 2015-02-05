@@ -4,7 +4,7 @@ package dk.Hero_vs_Monster;
  * Hero.java - Represents a Hero.
  * @Author Simon Jon Pedersen.
  * @Author Kristoffer Broch Møller.
- * @Version 1.0 04/02-2015
+ * @Version 1.0 05/02-2015
  * @see dk.Hero_vs_Monster.Character
  */
 public class Hero extends dk.Hero_vs_Monster.Character {
@@ -18,7 +18,7 @@ public class Hero extends dk.Hero_vs_Monster.Character {
     /**
      * Constructor.
      * @param name - The name of the hero.
-     * @param skills - Decides how many skills the monster has.
+     * @param skills - Decides how many skills the hero has.
      */
     public Hero (String name, int skills) {
 
@@ -27,7 +27,8 @@ public class Hero extends dk.Hero_vs_Monster.Character {
     }
 
     /**
-     * Sets the experience.
+     * Sets the experience, and if the the experience is bigger/equal then/to max experience,
+     * level up.
      * @param experience - The amount of experience.
      */
     public void setExperience(int experience) {
