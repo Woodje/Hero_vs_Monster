@@ -101,14 +101,78 @@ public class GameEngine {
 
                 while (combatScene.getWinner() == null) {
 
-                    userInterface.drawToScreen(combatScene.getCombatScene());
+                    if (charactersFighting[0].getHealth() == charactersFighting[0].getMaxHealth())
+                        userInterface.drawToScreen(combatScene.getCombatScene() + combatScene.getTextures(0));
+                    else
+                        userInterface.drawToScreen(combatScene.getCombatScene() + combatScene.getTextures(3));
 
-                    String result = combatScene.attackWithSkill(userInterface.loadMenu(menu.COMBAT, ""));
+                    String result = combatScene.attackWithSkill(userInterface.loadMenu(menu.COMBAT, ""), true);
 
-                    userInterface.drawToScreen(combatScene.getCombatScene());
+                    if (combatScene.getWinner() == null) {
+
+                        result += combatScene.attackWithSkill("1", false);
+
+                        if (combatScene.getWinner() != null) {
+
+                            result += "\n  " + combatScene.getWinner().getName() + " wins the fight!\n";
+
+                            userInterface.drawToScreen(combatScene.getCombatScene() + combatScene.getTextures(2));
+
+                        }
+                        else
+                            userInterface.drawToScreen(combatScene.getCombatScene() + combatScene.getTextures(3));
+
+                    }
+                    else {
+
+                        userInterface.drawToScreen(combatScene.getCombatScene() + combatScene.getTextures(1));
+
+                        result +=   "\n  " + combatScene.getWinner().getName() + " wins the fight!\n" +
+                                    "\n  You gained " + (combatScene.getWinner().getHealth() * 5) + " experience!\n";
+
+                    }
 
                     userInterface.getInput(result + "\n  Press 'ENTER' to continue");
+
                 }
+
+                Character winner = combatScene.getWinner(), loser = combatScene.getLoser();
+
+                if (winner instanceof Hero) {
+
+                    ((Hero) winner).setExperience((((Hero) winner).getExperience() + winner.getHealth() * 5));
+
+                    winner.setTexture(map.heroTexture);
+
+                    winner.setHealth(winner.getMaxHealth());
+
+                    characters.remove(loser);
+
+                    for (Character character : characters)
+                        if (!(character instanceof Hero))
+                            character.setLevel(winner.getLevel());
+
+                }
+                else {
+
+                    winner.setTexture(map.monsterTexture);
+
+                    winner.setHealth(winner.getMaxHealth());
+
+                    loser.setHealth(loser.getMaxHealth());
+
+                    loser.setTexture(map.heroTexture);
+
+                    loser.setLocation(loser.getPreviousLocation());
+
+                    map.setTextureLocation(loser.getTexture(),loser.getLocation());
+
+                }
+
+                map.setTextureLocation(winner.getTexture(), winner.getLocation());
+
+                if (characters.size() == 1)
+                    spawnExtraMonsters(winner.getLevel(), winner.getLevel());
 
             }
 
@@ -332,10 +396,6 @@ public class GameEngine {
 
             monster.setLevel(1);
 
-            monster.setHealth(100);
-
-            monster.setDamage(1);
-
             monster.setSkillArray(new Skill("Basic", 1, 10), 0);
 
             monster.setTexture(map.monsterTexture);
@@ -368,10 +428,6 @@ public class GameEngine {
 
                     monster.setLevel(1);
 
-                    monster.setHealth(100);
-
-                    monster.setDamage(1);
-
                     monster.setSkillArray(new Skill("Basic", 1, 10), 0);
 
                     monster.setTexture(map.monsterTexture);
@@ -383,6 +439,31 @@ public class GameEngine {
                 }
 
             }
+
+        }
+
+    }
+
+    private void spawnExtraMonsters(int amount, int level) {
+
+        if (amount > 5)
+            amount = 5;
+
+        for (int i = 0; i < amount; i++) {
+
+            Character monster = new Monster("MONSTER" + String.valueOf(i + 1), 1);
+
+            monster.setLevel(level);
+
+            monster.setSkillArray(new Skill("Basic", 1, 10), 0);
+
+            monster.setTexture(map.monsterTexture);
+
+            monster.setLocation(map.getTextureLocations(map.floorTexture).get(map.getTextureLocations(map.floorTexture).size() - 1));
+
+            characters.add(monster);
+
+            map.setTextureLocation(monster.getTexture(), monster.getLocation());
 
         }
 

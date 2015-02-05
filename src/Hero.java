@@ -1,3 +1,5 @@
+package com.company;
+
 /**
  * Hero.java - Represents a Hero.
  * @Author Simon Jon Pedersen.
