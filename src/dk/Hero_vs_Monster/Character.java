@@ -14,7 +14,7 @@ public class Character {
     private String name;
 
     /** The characters level. */
-    private  int level;
+    private int level;
 
     /** The characters amount of health. */
     private int health;
